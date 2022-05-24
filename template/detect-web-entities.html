@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Detect Web entities</title>
+  </head>
+  <body>
+    <div class="container">
+      <form
+        class="search-form"
+        action="/upload-image"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input type="file" id="file" name="file" class="file" />
+        <button class="search" type="submit">Search</button>
+      </form>
+
+      <div class="search-container">
+        <div class="col-1">
+          {% if publicImgUri == '' %}
+          <img
+            class="search-img hide"
+            src="{{publicImgUri}}"
+            alt="search-img"
+          />
+          {% elif publicImgUri %}
+          <img class="search-img" src="{{publicImgUri}}" alt="search-img" />
+          {% endif %}
+        </div>
+
+        <div class="col-2">
+          {%for value in objectName%}
+
+          <div class="search-item">
+            <a href="{{value}}" target="_blank">{{value}}</a>
+          </div>
+
+          {%endfor%}
+          <!--  -->
+          {% if isEmpty == true %}
+
+          <div class="no-result">
+            There is no search result with uploaded image
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

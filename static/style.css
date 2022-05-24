@@ -48,7 +48,7 @@
     border: 0.5px solid hsl(255, 80%, 4%);;
     border-collapse: collapse;
     padding: 20px;
-    color: hsl(255, 94%, 41%);;
+    color: hsl(255, 94%, 41%);
     font-weight: 700;
     font-family: 'Courier New', Courier, monospace;
   }
@@ -75,5 +75,99 @@
     border: solid rgb(0, 0, 0) 2px;
     border-radius: 8px;
     margin-top: 5px;
+  }
+
+  ::-webkit-file-upload-button {
+    display: inline-block;
+    background: hsl(255, 94%, 41%);
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;;
+    border-color: transparent;
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s linear; 
+  
+   }
+  
+   ::-webkit-file-upload-button:hover{
+    background: hsl(205, 86%, 17%);
+    color: hsl(255, 36%, 96%);
+   }
+  
+   .search-form {
+     background-color: #e6e6e6;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+    height: 5rem;
+    padding: 5px 15px;
+   }
+  
+  .search{
+    display: inline-block;
+    background: hsl(255, 94%, 41%);
+    font-family:'Courier New', Courier, monospace;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;;
+    border-color: transparent;
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s linear; 
+  }
+  
+  .search:hover{
+    background: hsl(279, 100%, 3%);
+    color: hsl(255, 24%, 90%);
+  }  
+ 
+  .col-1 >.search-img{
+    max-width: 300px;
+    height: auto;
+    border: 3px solid #020202;
+    border-radius: 5px;
+  }  
+  
+  .search-item{
+    display: flex;
+    height: 50px;
+    text-align: left;
+    align-items: center;
+    padding-left: 20px ;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+  }
+  
+  a{
+    text-decoration: none;
+  }
+  
+  .search-item:hover{
+    text-decoration: underline;
+  }
+
+  
+  .no-result{
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    align-items: center;
+    color: rgb(149, 55, 55);
+  }
+  
+  .hide{
+    display: none;
   }
 

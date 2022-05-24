@@ -1,8 +1,15 @@
+from fileinput import filename
 from pkgutil import iter_modules
+from queue import Empty
 import sys
 import os
+import io
+from os import access
+from sys import prefix
 
-from flask import Flask, request, render_template
+from flask import Flask, flash, redirect, request, render_template
+from google.cloud import storage
+from google.cloud import vision
 
 
 app = Flask(__name__, template_folder='template')
@@ -94,6 +101,59 @@ def callImgGallery():
 
     return render_template('img_display.html', catImgUri=catImgUri, dogImgUri=dogImgUri)
 
+@app.route('/detect-Web-entities', methods=['GET', 'POST'])
+def detectWebEntities():
+
+    return render_template('detect-web-entities.html')
+
+
+@app.route('/upload-image', methods=['GET', 'POST'])
+def uploadImage():
+
+    if request.method == 'POST':
+
+        objectName = []
+        isEmpty = False
+        publicImgUri = ''
+
+        if 'file' not in request.files:
+            return redirect(request.url) #if the file is not in there redirect back to the url
+
+        file = request.files['file']
+
+        if file == '':
+            return redirect(request.url) #if the file is empty, redirect
+
+        if file:
+
+            print(file)
+
+            storage_client = storage.Client()
+            bucket = storage_client.bucket("piyumi_bucket_2")
+            filename = '%s/%s' % ('images', file.filename) #creates a images directory inside the bucket and assign the image with the filename
+
+            blob = bucket.blob(filename, chunk_size=262144 * 5)
+            blob.upload_from_file(file, file.content_type) # Does the file upload
+
+            image_uri = ('gs://piyumi_bucket_2/images/'+file.filename)
+            publicImgUri = ("https://storage.googleapis.com/piyumi_bucket_2/images/"+file.filename)
+
+            client = vision.ImageAnnotatorClient()
+            image = vision.Image()
+            image.source.image_uri = image_uri
+
+            response = client.web_detection(image=image)
+            annotations = response.web_detection
+
+            if annotations.pages_with_matching_images:
+
+                for page in annotations.pages_with_matching_images:
+                    objectName.append(format(page.url))
+
+            else:
+                isEmpty = True
+
+        return render_template('detect-web-entities.html', objectName=objectName, isEmpty=isEmpty, publicImgUri=publicImgUri)
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
